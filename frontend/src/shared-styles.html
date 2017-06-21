@@ -1,0 +1,236 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<!-- shared styles for all views -->
+<dom-module id="shared-styles">
+  <template>
+    <style>
+
+      paper-icon-button.white {
+        color: #FFFFFF;
+      }
+      paper-icon-button.black {
+        color: #000000;
+      }
+
+      paper-button.white {
+        color: #FFFFFF;
+      }
+      paper-button.black {
+        border: 1px solid #000000;
+        color: #000000;
+      }
+
+      .full-centered {
+        display: inline-block;
+        position: relative;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .avatar {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        overflow: hidden;
+        @apply(--shadow-elevation-2dp);
+      }
+
+      .transparent-avatar {
+        background: var(--app-avatar-color);
+      }
+
+      .flex {
+      	@apply(--layout-flex);
+      }
+
+      h1 {
+        margin: 16px 0;
+        color: #212121;
+        font-size: 22px;
+      }
+
+      p.small, span.small {
+        font-size: 12px;
+      }
+
+      p.mediumsmall, span.mediumsmall {
+        font-size: 14px;
+      }
+
+      span.mediumsmall {
+        padding-bottom: 5px;
+      }
+
+      span.small {
+        padding-bottom: 3px;
+      }
+
+      span.small, span.mediumsmall:not(.linkhead) {
+        cursor: pointer;
+      }
+
+      a.maillink {
+        text-decoration: none;
+        color: #FFFFFF;
+      }
+
+      a.maillink:hover {
+        color: #FFFFFF;
+      }
+
+      a.contentmaillink {
+        text-decoration: none;
+        color: rgba(0,0,0,0.7);
+      }
+
+      a.contentmaillink:hover {
+        color: #000000;
+      }
+
+      .linkhead {
+      	color: rgba(255,255,255,0.7);
+      }
+
+      	.loadingContainer {
+	  		position: fixed;
+	  		width: 100%;
+	  		height: 50%;
+	  		bottom: 0;
+	  		left: 0;
+	  		margin: 0;
+	  		padding: 0;
+		}
+
+		.loadingParent {
+		  height: 132px;
+		  width: 100px;
+		  position: relative;
+      	  top: 50%;
+      	  left: 50%;
+      	  transform: translate(-50%, -50%);	
+		}
+
+		.loader {
+		  position: relative;
+		  width: 44px;
+		  height: 8px;
+      	  margin: 12px auto;
+		}
+
+		.loading-avatar {
+		  position: relative;
+      	  margin: 0 auto;
+		}
+
+		.dot {
+		  display: inline-block;
+		  width: 8px;
+		  height: 8px;
+		  border-radius: 4px;
+		  background: var(--app-primary-color);
+		  position: absolute;
+		}
+
+		.dot_1 {
+		  animation: animateDot1 1.5s linear infinite;
+		  left: 12px;
+		  background: var(--app-avatar-color);
+		}
+
+		.dot_2 {
+		  animation: animateDot2 1.5s linear infinite;
+		  animation-delay: 0.5s;
+		  left: 24px;
+		}
+
+		.dot_3 {
+		  animation: animateDot3 1.5s linear infinite;
+		  left: 12px;
+		}
+
+		.dot_4 {
+		  animation: animateDot4 1.5s linear infinite;
+		  animation-delay: 0.5s;
+		  left: 24px;
+		}
+
+		@keyframes animateDot1 {
+		  0% {
+		    transform: rotate(0deg) translateX(-12px);
+		  }
+		  25% {
+		    transform: rotate(180deg) translateX(-12px);
+		  }
+		  75% {
+		    transform: rotate(180deg) translateX(-12px);
+		  }
+		  100% {
+		    transform: rotate(360deg) translateX(-12px);
+		  }
+		}
+		@keyframes animateDot2 {
+		  0% {
+		    transform: rotate(0deg) translateX(-12px);
+		  }
+		  25% {
+		    transform: rotate(-180deg) translateX(-12px);
+		  }
+		  75% {
+		    transform: rotate(-180deg) translateX(-12px);
+		  }
+		  100% {
+		    transform: rotate(-360deg) translateX(-12px);
+		  }
+		}
+		@keyframes animateDot3 {
+		  0% {
+		    transform: rotate(0deg) translateX(12px);
+		  }
+		  25% {
+		    transform: rotate(180deg) translateX(12px);
+		  }
+		  75% {
+		    transform: rotate(180deg) translateX(12px);
+		  }
+		  100% {
+		    transform: rotate(360deg) translateX(12px);
+		  }
+		}
+		@keyframes animateDot4 {
+		  0% {
+		    transform: rotate(0deg) translateX(12px);
+		  }
+		  25% {
+		    transform: rotate(-180deg) translateX(12px);
+		  }
+		  75% {
+		    transform: rotate(-180deg) translateX(12px);
+		  }
+		  100% {
+		    transform: rotate(-360deg) translateX(12px);
+		  }
+		}
+    </style>
+  </template>
+</dom-module>
+<script src="../bower_components/lodash/lodash.js"></script>
+<script src="../bower_components/gsap/src/minified/TimelineMax.min.js"></script>
+<script src="../bower_components/gsap/src/minified/TweenMax.min.js"></script>
+<script src="../bower_components/gsap/src/minified/plugins/ScrollToPlugin.min.js"></script>
+<script src="../bower_components/gsap/src/minified/plugins/BezierPlugin.min.js"></script>
+<script src="../bower_components/scrollmagic/scrollmagic/uncompressed/ScrollMagic.js"></script>
+<script src="../bower_components/scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap.js"></script>

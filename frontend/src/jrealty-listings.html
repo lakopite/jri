@@ -1,0 +1,137 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="jrealty-listings">
+  <template>
+    <style include="shared-styles">
+      	:host {
+        	display: block;
+        	padding: 10px;
+      	}
+
+        .listings-section {
+          @apply(--layout-horizontal);
+          @apply(--layout-wrap);
+          @apply(--layout-center-justified);
+        }
+
+        paper-card.listing-card {
+          width: 400px;
+          margin: 1em;
+          @apply(--layout-self-start);
+        }
+
+        .listing-card-image {
+          width: 100%;
+          height: 200px;
+        }
+
+        .listing-card-header {
+          @apply(--paper-font-headline);
+        }
+
+        .listing-card-stats {
+          @apply(--layout-justified);
+          @apply(--layout-horizontal);
+        }
+
+        .listing-card-details { color: var(--app-accent-color); }
+
+        .listing-card-light { 
+          color: var(--paper-grey-600); 
+          white-space: pre-wrap;
+        }
+
+        .detail-button {
+          cursor: pointer;
+          text-decoration: none;
+        }
+
+    </style>
+    <template is="dom-if" if="{{!listingsReady}}">
+      <div class="loadingContainer">
+        <div class="loadingParent">
+           <img src="../../images/JRLogo.png" class="avatar transparent-avatar loading-avatar"/>
+      	   <div class="loader">
+            <span class="dot dot_1"></span>
+          	<span class="dot dot_2"></span>
+          	<span class="dot dot_3"></span>
+          	<span class="dot dot_4"></span>
+      	   </div>
+        </div>
+  	   </div>
+     </template>
+     <template is="dom-if" if="{{listingsReady}}">
+        <div class="listings-section">
+          <template is="dom-if" if="{{isEmpty(listings)}}">
+            <paper-card class="listing-card">
+              <div class="card-content">
+                <div class="listing-card-header">No {{name}} listings found</div>
+                <p class="listing-card-light">Please visit our other listings or call 805.389.4747 for more information</p>
+              </div>
+            </paper-card>
+          </template>
+          <template is="dom-repeat" items="{{listings}}">
+            <paper-card class="listing-card">
+              <iron-image class="listing-card-image" sizing="cover" src="{{item.photos.0.url}}"></iron-image>
+              <div class="card-content">
+                <div class="listing-card-header">{{item.title}}</div>
+                <p class="listing-card-light">{{item.details}}</p>
+              </div>
+              <div class="card-actions">
+                <div class="listing-card-stats">
+                  <paper-item>{{item.status}}</paper-item>
+                  <paper-item>{{_getMoneyString(item.price)}}</paper-item>
+                </div>
+                <a class="detail-button" href="[[getHref(item.id)]]" tabindex="-1">  
+                  <paper-button class="listing-card-details">More Details</paper-button>
+                </a>   
+              </div>
+            </paper-card>
+          </template>
+        </div>
+     </template>
+  </template>
+  <script>
+    Polymer({
+      is: 'jrealty-listings',
+      properties: {
+        name: {
+          type: String
+        },
+        listingsReady: {
+          type: Boolean,
+          value: false
+        },
+        listings: {
+          type: Array,
+          value: []
+        }
+      },
+      isEmpty: function(a) {
+        console.log(a);
+        console.log(_.isEmpty(a));
+        return _.isEmpty(a);
+      },
+      getHref: function(id_) {
+        return "/listing/" + id_
+      },
+      _getMoneyString: function(price) {
+        if (price) {
+          return price.toLocaleString('en-US', { style: 'currency', currency: 'USD' }).split('.')[0];
+        }
+        return "Call for price"
+      },
+    });
+  </script>
+</dom-module>

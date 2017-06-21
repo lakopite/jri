@@ -1,0 +1,593 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!-- <link rel="prefetch" href="../../images/farmandlandheader.jpg">
+<link rel="prefetch" href="../../images/commercialheader.jpg">
+<link rel="prefetch" href="../../images/forleaserentheader.jpg">
+<link rel="prefetch" href="../../images/residentialheader.jpg">
+<link rel="prefetch" href="../../images/multiresidentialheader.jpg">
+<link rel="prefetch" href="../../images/TimPool.jpg"> -->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="jrealty-home">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+
+      h1,h2 {
+        text-align: center;
+      }
+      .image-page {
+        background: var(--app-header-url);
+        background-size: cover;
+        color: #FFFFFF;
+      }
+      .page {
+        width: 100%;
+      }
+      .black-page {
+        background: #000000;
+        color: #FFFFFF;
+      }
+
+      .grey-page {
+        background: var(--paper-blue-grey-50);
+        color: #000000;
+        border-top: 1px solid rgba(0,0,0,0.2);
+      }
+
+      .medium-grey-page {
+        background: var(--paper-blue-grey-100);
+        color: #000000;
+        border-top: 1px solid rgba(0,0,0,0.2);
+      }
+
+      .dark-grey-page {
+        background: var(--paper-blue-grey-900);
+        color: #FFFFFF;
+        @apply(--paper-shadow);
+      }
+
+      .contact-wrapper {
+        @apply(--layout-horizontal);
+        @apply(--layout-around-justified);
+        @apply(--layout-wrap);
+        padding: 32px 0;
+      }
+
+      .about-wrapper {
+        @apply(--layout-horizontal);
+        @apply(--layout-around-justified);
+        @apply(--layout-wrap);
+        padding: 0 0 32px 0;
+      }
+
+      .about-wrapper p, .overview-wrapper p {
+        color: rgba(0,0,0,0.7);
+      }
+
+      .about-section, .overview-section {
+        text-align: center;
+        max-width: 400px;
+        width: 400px;
+        margin: 0 20px;
+        padding: 20px;
+      }
+
+      .listings-page {
+        height: 1320px;
+      }
+
+      .listings-wrapper {
+        height: 264px;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .listings-section {
+        height: 100%;
+        width: 100%;
+        opacity: 0.2;
+        -moz-transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+      }
+
+      .listings-section.scrollhovered {
+        opacity: 0.6;
+        -moz-transform: scale(1.1);
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+      }
+
+      paper-button.listing-button {
+        border: 1px solid #FFFFFF;
+      }
+
+      paper-button.listing-button.scrollhovered {
+        background: rgba(0,0,0,0.7);
+      }
+
+      .listings-section iron-image {
+        height: 100%;
+        width: 100%;
+      }
+
+      .listing-button-wrapper {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        z-index: 99;
+        height: 264px;
+      }
+
+      .overview-wrapper {
+        @apply(--layout-horizontal-reverse);
+        @apply(--layout-around-justified);
+        @apply(--layout-wrap-reverse);
+      }
+
+      .overview-wrapper-top {
+        padding-top: 32px;
+      }
+
+      .overview-wrapper-bottom {
+        padding-bottom: 32px;
+      }
+
+      .drone-section {
+        text-align: center;
+        margin: 0 20px;
+        padding: 20px;
+        max-width: 350px;
+      }
+
+      .drone-wrapper {
+        @apply(--layout-vertical);
+        @apply(--layout-center);
+        @apply(--layout-justified);
+        width: 100%;
+        background-color: rgba(0,0,0,0.6);
+      }
+
+      .transparent-non-square {
+        display: inline-block;
+        width: 183.45px;
+        height: 120px;
+        z-index: 100;
+      }
+
+      .transparent-square {
+        display: inline-block;
+        width: 120px;
+        height: 120px;
+      }
+
+      .contact-section{
+        text-align: center;
+        margin: 20px 10px;
+        min-width: 250px;
+        max-width: 350px;
+      }
+
+      .downloads-wrapper {
+        @apply(--layout-horizontal);
+        @apply(--layout-around-justified);
+        @apply(--layout-wrap);
+        padding: 20px 0 42px 0;
+      }
+
+      .downloads-section {
+        @apply(--layout-vertical);
+        text-align: center;
+        @apply(--layout-center);
+        min-width: 250px;
+        padding-bottom: 10px;
+        max-width: 350px;
+      }
+
+      #scrollButton {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+        position: relative;
+        height: 70px;
+      }
+
+      #scrollButton a span {
+        position: absolute;
+        top: o;
+        width: 24px;
+        height: 24px;
+        margin-left: -12px;
+        border-left: 1px solid var(--app-primary-color);
+        border-bottom: 1px solid var(--app-primary-color);
+        -webkit-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        -webkit-animation: scrollButtonAnimate 2s infinite;
+        animation: scrollButtonAnimate 2s infinite;
+        opacity: 0;
+        box-sizing: border-box;
+      }
+      #scrollButton a span:nth-of-type(1) {
+        -webkit-animation-delay: 0s;
+        animation-delay: 0s;
+      }
+      #scrollButton a span:nth-of-type(2) {
+        top: 16px;
+        -webkit-animation-delay: .15s;
+        animation-delay: .15s;
+      }
+      #scrollButton a span:nth-of-type(3) {
+        top: 32px;
+        -webkit-animation-delay: .3s;
+        animation-delay: .3s;
+      }
+      #scrollButton a {
+        color: var(--app-primary-color);
+        z-index: 2;
+        transition: opacity .3s;
+        text-decoration: none;
+      }
+      #scrollButton a:hover {
+        opacity: .2;
+      }
+      @-webkit-keyframes scrollButtonAnimate {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+      @keyframes scrollButtonAnimate {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+    </style>
+    <div id="home">
+      <div class="page grey-page" id="about">
+        <div id="scrollButton">
+          <a><span></span><span></span><span></span></a>
+        </div>
+        <div class="about-wrapper">
+          <div id="about-section-1" class="about-section">
+            <img src="../../images/JRLogo.png" class="avatar transparent-avatar"/>
+            <h3>The Jacobson Realty Story</h3>
+            <p>Jacobson Realty, Inc. is the longest serving active real estate office in Ventura County, with the original office having been founded by Eastwood and Lathrop in 1896. Jacobson Realty Inc was incorporated in 1965 by Lester Jacobson, currently managed and operated by Lynn Jacobson Osslund and Lester Jacobson.
+            <br/><br/>
+            Jacobson Realty has been providing expertise for over the past 55 years in a variety of Real Estate transactions including agricultural, commercial, and residential income properties, together with residential properties and general real estate investments for the following areas: Camarillo, Oxnard, Port Hueneme, Malibu, Ventura, Santa Paula, Moorpark, Simi Valley, Newbury Park, Thousand Oaks, Westlake Village, Ojai, Carpinteria & Santa Barbara.</p>
+          </div>
+          <div id="about-section-2" class="about-section">
+            <img src="../../images/JRLogo.png" class="avatar transparent-avatar"/>
+            <h3>Serving Ventura County since 1896</h3>
+            <p>
+            Over the years, we have earned and steadfastly maintained a highly respected reputation in the real estate industry, built upon a foundation of hard work, superior knowledge, and honesty, integrity and fair dealing with all of our clients and customers. We offer the utmost standard of personal and professional service, and are dedicated to helping our clients and patrons achieve and maintain the highest value and profitability possible for their real estate investments.
+
+          If you are looking to sell a property in your existing portfolio, or are interested in acquiring Farmland, Commercial Investments, Multi-Residential, or Residential services in Ventura County and the surrounding areas, or would like to schedule a viewing for a property in these areas, please Contact Us.</p>  
+        </div>
+      </div>
+    </div>
+    <div class="page black-page listings-page" id="current-listings">
+      <div id="farmandland-wrapper" class="listings-wrapper">
+        <div class="listing-button-wrapper">
+          <a href="/farm-and-land" tabindex="-1">
+            <paper-button id="farmandland-button" class="listing-button white full-centered">Farm & Land</paper-button>
+          </a>
+        </div>
+        <div class="listings-section" id="farmandland-section">
+          <iron-image sizing="cover" src="../../images/farmandlandheader.jpg"></iron-image>
+        </div>
+      </div>
+      <div id="commercial-wrapper" class="listings-wrapper">
+        <div class="listing-button-wrapper">
+          <a href="/commercial" tabindex="-1">
+            <paper-button id="commercial-button" class="listing-button white full-centered">Commercial</paper-button>
+          </a>
+        </div>
+        <div class="listings-section" id="commercial-section">
+          <iron-image sizing="cover" src="../../images/commercialheader.jpg"></iron-image>
+        </div>
+      </div>
+      <div id="residential-wrapper" class="listings-wrapper">
+        <div class="listing-button-wrapper">
+          <a href="/residential" tabindex="-1">  
+            <paper-button id="residential-button" class="listing-button white full-centered">Residential</paper-button>
+          </a>
+        </div>
+        <div class="listings-section" id="residential-section">
+          <iron-image sizing="cover" src="../../images/residentialheader.jpg"></iron-image>
+        </div>
+      </div>
+      <div id="multi-residential-wrapper" class="listings-wrapper">
+        <div class="listing-button-wrapper">
+          <a href="/multi-residential" tabindex="-1">
+            <paper-button id="multi-residential-button" class="listing-button white full-centered">Multi-Residential</paper-button>
+          </a>
+        </div>
+        <div class="listings-section" id="multi-residential-section">
+          <iron-image sizing="cover" src="../../images/multiresidentialheader.jpg">
+          </iron-image>
+        </div>
+      </div>
+      <div id="for-lease-rent-wrapper" class="listings-wrapper">
+        <div class="listing-button-wrapper">
+          <a href="/for-lease-rent" tabindex="-1">
+            <paper-button id="for-lease-rent-button" class="listing-button white full-centered">For Lease/Rent</paper-button>
+          </a>
+        </div>
+        <div class="listings-section" id="for-lease-rent-section">
+          <iron-image sizing="cover" src="../../images/forleaserentheader.jpg"></iron-image>
+        </div>
+      </div>
+    </div>
+    <div class="page grey-page" id="firm-overview">
+      <div class="overview-wrapper overview-wrapper-top">
+        <div id="overview-section-2" class="overview-section">
+          <img src="../../images/lester.jpg" class="avatar"/>
+          <h3>Lester Jacobson</h3>
+          <p>Real Estate Broker</p>
+          <p class="small">Lester Jacobson began his professional career as a farmer in the upper Applegate Valley of Southern Oregon and title officer for the Southern Oregon Title Company of Commonwealth. After only 6 years, at age 27, Les was appointed Vice President of Commonwealth Title in Medford Oregon (one of the youngest VPs ever appointed to that position).<br/><br/>
+          In 1955, after farming and working 11 years in Oregon, Les returned to Southern California to start his career in real estate, and with his extensive title and farm background, became one of the pre-eminent farm and commercial real estate brokers in Ventura County. Known and respected all these years for his honesty, integrity and vast knowledge of farm, commercial and investment properties, Les is a pillar of the real estate industry.<br/><br/>
+
+        Les is proud of his real estate lineage. The real estate company was founded in 1896 by Eastwood and Lathrop, then operated by Lathrop & Yung, followed by Yung & Jacobson, and currently Jacobson & Osslund. Jacobson Realty, Inc. was incorporated in 1965.<br/><br/>
+          It has been said that Les has sold more property in Ventura County than any other single Realtor, and just received the distinguished Lifetime Achievement Award of Realtor Emeritus in 2009 from the National Association of Realtors for 55 continuous years of service in the real estate industry.<br/><br/>
+          Les has been active in the Ventura County community over his adult lifetime with the Salvation Army, Osteopathic Hospital Foundation, the First Presbyterian Church of Oxnard as an Elder and serving on numerous committees. He and his wife Dorothy of over 65 years are blessed with 3 children and 8 grand-children.</p>
+        </div>
+        <div id="overview-section-1" class="overview-section">
+          <img src="../../images/lynn.jpg" class="avatar"/>
+          <h3>Lynn Osslund</h3>
+          <p>Real Estate Broker</p>
+          <p class="small">Lynn Jacobson Osslund originally obtained her salesperson’s license in 1977 while still in college, and formally began her real estate career in 1980, after graduating from UC Davis with a BS with Honors in Economics. She obtained her broker’s license in 1986.<br/><br/>
+
+        Over the last 30 years, Lynn has represented buyers and sellers, investors and developers, and landlords and tenants, in a broad variety of transactions including leasing, sales, acquisitions, tax-deferred exchanges, developable properties, and general real estate investments.<br/><br/>
+
+        Lynn has been active in the educational community in Ventura County, having served on the Board of Directors for the Mesa Union Education Foundation for 13 years, coordinated a fine arts enrichment program with Mesa Union Students K-8, teachers, parents and administration for 8 of those years, served on the Rio Mesa High School Improvement Program (SIP) committee and Scholarship Foundation for 4 years, and has also served on various building and homeowner association boards and has held various offices as President, Secretary and Treasurer in these affiliations.<br/><br/>
+
+        She has been married since 1981 to Timothy Osslund, one of the founding scientists of Amgen Inc. and adjunct professor at CSUCI, and they have 3 college age daughters.</p>
+        </div>
+      </div>
+      <div class="overview-wrapper overview-wrapper-bottom">
+        <div id="overview-section-4" class="overview-section">
+          <img src="../../images/JRLogo.png" class="avatar transparent-avatar"/>
+          <h3>Elyse Osslund</h3>
+          <p>Agent</p>
+          <p class="small">Elyse Futhey graduated from Loyola Marymount University with a BA in Political Science in 2011 and went on to obtain her Juris Doctor with honors from The Ventura and Santa Barbara Colleges of Law in 2015.<br/><br/>
+          During law school, Elyse clerked at the Ventura Superior Court - Probate Court Division under Judge Glen Reiser and thereafter obtained a concentration in Estate Planning Law. Elyse also became certified in dispute resolution through the Ventura Center for Dispute Settlement.<br/><br/>
+          Elyse’s primary focus is currently in property and assessment management. She also handles all of the financial and administrative responsibilities for Jacobson Realty, Inc.</p>
+        </div>
+        <div id="overview-section-3" class="overview-section">
+          <img src="../../images/jill.jpg" class="avatar"/>
+          <h3>Jillian Bailey</h3>
+          <p>Broker Associate</p>
+          <p class="small">Jillian Bailey began her career in 1981 as a licensed sales associate with the International Real Estate Network in the Ojai Valley focusing on ranches and land.  In 1986 she obtained her broker’s license and began working for Oaktree Property Management with 250 properties under her supervision. In 1988, she started Select Property Management with a portfolio of properties in the Ojai Valley, Montecito and Santa Barbara areas.  While active in residential sales and management, her primary focus as a broker and investor has been rural undeveloped land in the Ojai Valley and surrounding areas.<br/><br/>
+          In 1997 she joined the Remax team in Ojai and for the last 10 years has been operating as an independent broker.<br/><br/>
+          A Ventura County resident since 1967, she has been active in the Arts serving on the board of directors for the Ojai Center for the Arts from 1994 to 1997 and is currently an active volunteer with Catholic Charities of Ventura.  In the Spring of 2011 she joined Jacobson Realty, Inc. and is looking forward to a new chapter in this challenging and rewarding profession.</p>
+        </div>
+      </div>
+    </div>
+    <div class="page image-page" id="drone-footage">
+      <div class="drone-wrapper">
+        <div id="drone-section-1" class="drone-section">
+          <img id="drone-icon" src="../../images/phantom3.png" class="transparent-non-square"/>
+        </div>
+        <div id="drone-section-2" class="drone-section">
+          <p class="mediumsmall">Jacobson Realty uses custom drone footage to give prospective buyers a birds-eye view of listed properties.  Visit our youtube channel to see an array of awesome shots, or check out our current listings to see if the property you're interested in has been covered.</p>
+        </div>
+      </div>
+    </div>
+    <div class="page medium-grey-page" id="contact">
+      <div class="contact-wrapper">
+        <div id="contact-section-1" class="contact-section">
+          <iron-icon icon="communication:business"></iron-icon>
+          <paper-item>
+            <paper-item-body two-line>
+              <div>445 Rosewood Ave, Suite J.</div>
+              <div secondary>Camarillo, California 93010</div>
+            </paper-item-body>
+          </paper-item>
+        </div>
+        <div id="contact-section-2" class="contact-section">
+          <iron-icon icon="communication:phone"></iron-icon>
+          <paper-item>
+            <paper-item-body two-line>
+              <div>805.389.4747</div>
+              <div secondary>Phone</div>
+            </paper-item-body>
+          </paper-item>
+        </div>
+        <div id="contact-section-3" class="contact-section">
+          <iron-icon icon="hardware:scanner"></iron-icon>
+          <paper-item>
+            <paper-item-body two-line>
+              <div>805.389.4744</div>
+              <div secondary>Fax</div>
+            </paper-item-body>
+          </paper-item>
+        </div>
+        <div id="contact-section-4" class="contact-section">
+          <iron-icon icon="communication:email"></iron-icon>
+          <paper-item>
+            <paper-item-body two-line>
+              <div><a class="contentmaillink" href="mailto:jacobsonrealtyinc@gmail.com">jacobsonrealtyinc@gmail.com</a></div>
+              <div secondary>Email</div>
+            </paper-item-body>
+          </paper-item>
+        </div>
+      </div>
+    </div>
+      <div class="page dark-grey-page" id="downloads">
+       <div class="downloads-wrapper">
+         <div class="downloads-section">
+           <span class="mediumsmall linkhead">Commercial Links</span>
+           <span class="small"><a class="maillink">Commercial Link 1</a></span>
+           <span class="small"><a class="maillink">Commercial Link 2</a></span>
+           <span class="small"><a class="maillink">Commercial Link 3</a></span>
+           <span class="small"><a class="maillink">Commercial Link 4</a></span>
+         </div>
+         <div class="downloads-section">
+           <span class="mediumsmall linkhead">Residential Links</span>
+           <span class="small"><a class="maillink">Residential Link 1</a></span>
+           <span class="small"><a class="maillink">Residential Link 2</a></span>
+           <span class="small"><a class="maillink">Residential Link 3</a></span>
+         </div>
+         <div class="downloads-section">
+           <span class="mediumsmall linkhead">Lots & Land Listing Links</span>
+           <span class="small"><a class="maillink">Lots & Land Listing Link 1</a></span>
+         </div>
+         <div class="downloads-section">
+           <span class="mediumsmall linkhead">Additional Input Links</span>
+           <span class="small"><a class="maillink">Additional Input Link 1</a></span>
+           <span class="small"><a class="maillink">Additional Input Link 2</a></span>
+         </div>
+       </div>
+     </div>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'jrealty-home',
+      properties: {
+        init: {
+          type: Boolean,
+          value: false
+        },
+        name: {
+          type: String,
+        },
+        scenes: {
+          type: Object,
+          value: {}
+        },
+        controller: {}
+      },
+      behaviors: [
+        Polymer.IronResizableBehavior
+      ],
+      listeners: {
+        'iron-resize': '_onIronResize'
+      },
+      _onIronResize: function() {
+        if (this.init) {
+          this.updateScrollDurations();
+        }
+      },
+      _navigatetoListingType: function(listingtype) {
+        window.location.href = "/" + listingtype
+      },
+      goFarmAndLand: function() {
+        this._navigatetoListingType('farm-and-land');
+      },
+      goCommercial: function() {
+        this._navigatetoListingType('commercial');
+      },
+      goResidential: function() {
+        this._navigatetoListingType('residential');
+      },
+      goMultiResidential: function() {
+        this._navigatetoListingType('multi-residential');
+      },
+      goForLeaseAndRent: function() {
+        this._navigatetoListingType('for-lease-rent');
+      },
+      updateScrollDurations: function() {
+        var this_ = this;
+        _.forIn(this.scenes, function(value,key) {
+          if (key.indexOf("animation") !== -1) {
+            var height_ = this_.$['drone-footage'].clientHeight;
+            value.duration(height_ + window.innerHeight);
+            value.offset(this_.$['drone-footage'].offsetTop - window.innerHeight);
+          }
+          else {
+            var height_ = this_.$[key].clientHeight;
+            value.duration(height_);
+            value.offset(this_.$[key].offsetTop - window.innerHeight/2);
+          }
+        },this);
+      },
+      attached: function() {
+        var _this= this;
+        setTimeout(function() {
+          _this.initScrollMagic();
+          _this.set('init',true);
+        },0);
+      },
+      // scrollToListings: function(e) {
+      //   if (this.init) {
+      //     e.preventDefault();
+      //     this.controller.scrollTo(this.$['current-listings']);
+      //   }
+      // },
+      // scrollToContacts: function(e) {
+      //   if (this.init) {
+      //     e.preventDefault();
+      //     this.controller.scrollTo(this.$['contact']);
+      //   }
+      // },
+      initAnimationScene: function(id) {
+        return new ScrollMagic.Scene({
+          duration: this.$[id].clientHeight + window.innerHeight,
+          offset: this.$[id].offsetTop - window.innerHeight,
+          triggerHook: 'onLeave'
+        })
+        .addTo(this.controller)
+        //.addIndicators()
+      },
+      initScrollHoveredScene: function(id) {
+          var _this = this;
+          return new ScrollMagic.Scene({
+            offset: this.$[id].offsetTop - window.innerHeight/2,
+            duration: this.$[id].clientHeight
+          })
+          .addTo(this.controller)
+          //.addIndicators()
+          .on("enter", function (e) {
+              _this.toggleClass("scrollhovered", true, _this.$[id.replace("-wrapper","-section")]);
+              _this.toggleClass("scrollhovered", true, _this.$[id.replace("-wrapper","-button")]);
+          })
+          .on("leave", function (e) {
+              _this.toggleClass("scrollhovered", false, _this.$[id.replace("-wrapper","-section")]);
+              _this.toggleClass("scrollhovered", false, _this.$[id.replace("-wrapper","-button")]);
+          })
+      },
+      initScrollMagic: function() {
+        this.controller = new ScrollMagic.Controller();
+        this.controller.scrollTo(function (newpos) {
+          TweenMax.to(window, 0.5, {scrollTo: {y: newpos-64}});
+        });
+        this.scenes["animation1"] = this.initAnimationScene("drone-footage");
+        var tween = TweenMax.fromTo(this.$['drone-icon'], 2, {x: "-55%" , rotation: 20}, {x: "55%", rotation: -10, repeat: -1, yoyo: true, ease: Sine.easeInOut}
+        );
+        this.scenes["animation1"].setTween(tween);
+        this.scenes["farmandland-wrapper"] = this.initScrollHoveredScene("farmandland-wrapper");
+        this.scenes["commercial-wrapper"] = this.initScrollHoveredScene("commercial-wrapper");
+        this.scenes["multi-residential-wrapper"] = this.initScrollHoveredScene("multi-residential-wrapper");
+        this.scenes["residential-wrapper"] = this.initScrollHoveredScene("residential-wrapper");
+        this.scenes["for-lease-rent-wrapper"] = this.initScrollHoveredScene("for-lease-rent-wrapper");
+      }
+    });
+  </script>
+</dom-module>

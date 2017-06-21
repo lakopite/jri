@@ -1,0 +1,391 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../bower_components/iron-icons/hardware-icons.html">
+<link rel="import" href="../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="jrealty-main">
+  <template>
+    <iron-media-query query="only screen and (min-device-width : 1025px) " full query-matches="{{desktop}}"></iron-media-query>
+    <iron-ajax auto url="<URL HERE>" method="GET" handleAs="json" on-error="_listingsResponse" on-response="_listingsResponse"></iron-ajax>
+    <style>
+      :host {
+        --app-avatar-color: #607D8B;
+        --app-secondary-color: black;
+        --app-header-url: url(../../images/TimPool.jpg);
+        --app-primary-color: #263238;
+        --app-accent-color: #00BCD4;
+        display: block;
+      }
+
+      app-header {
+        color: #fff;
+        background-color: var(--app-primary-color);
+      }
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
+      .drawer-list {
+        margin: 0 20px;
+      }
+
+      .drawer-list a {
+        display: block;
+        padding: 0 16px;
+        text-decoration: none;
+        color: var(--app-secondary-color);
+        line-height: 40px;
+      }
+
+      .drawer-list a.iron-selected {
+        color: black;
+        font-weight: bold;
+      }
+
+      #main-app-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 212px;
+        color: #fff;
+        background-color: var(--app-primary-color);
+        --app-header-background-front-layer: {
+          background-image: var(--app-header-url);
+          background-position: left center;
+          filter: brightness(60%);
+        };
+      }
+
+      app-toolbar.tall {
+        height: 148px;
+      }
+
+      app-header [main-title] {
+        font-weight: lighter;
+        margin-left: 108px;
+      }
+
+      app-header [condensed-title] {
+        font-weight: lighter;
+        margin-left: 30px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      app-header [condensed-title] i {
+        font-weight: 100;
+        font-style: normal;
+      }
+
+      a.maillink {
+        text-decoration: none;
+        color: #FFFFFF;
+      }
+
+      a.maillink:hover {
+        color: #FFFFFF;
+      }
+
+      @media (max-width: 639px) {
+        app-header [main-title] {
+          margin-left: 50px;
+          font-size: 30px;
+        }
+        app-header [condensed-title] {
+          font-size: 15px;
+        }
+      }
+      @media screen and (max-width: 599px){
+        #toolbar-number {
+          display: none;
+        }
+      }
+    </style>
+
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
+    <app-drawer-layout fullbleed force-narrow>
+      <!-- Drawer content -->
+      <app-drawer id="drawer">
+        <app-toolbar>Menu</app-toolbar>
+        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="home" href="/home">Home</a>
+          <a name="farm-and-land" href="/farm-and-land">Farm and Land</a>
+          <a name="commercial" href="/commercial">Commercial</a>
+          <a name="residential" href="/residential">Residential</a>
+          <a name="multi-residential" href="/multi-residential">Multi-Residential</a>
+          <a name="for-lease-rent" href="/for-lease-rent">For Lease/Rent</a>
+        </iron-selector>
+      </app-drawer>
+
+      <!-- Main content -->
+      <app-header-layout>
+
+        <app-header style="{{_determineHeaderStyle(desktop)}}" id="main-app-header" condenses fixed effects="waterfall resize-title blend-background parallax-background">
+          <app-toolbar justify="justified">
+            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+            <iron-image height="72" width="216" sizing="contain" src="../../images/headerlogo.png"></iron-image/>
+            <h4 condensed-title>{{_getSubtitle(page,listingPayload)}}</h4>
+            <paper-item id="toolbar-number">
+              <paper-item-body two-line>
+                <div>805.389.4747</div>
+                <div secondary><a class="maillink" href="mailto:jacobsonrealtyinc@gmail.com">jacobsonrealtyinc@gmail.com</a></div>
+              </paper-item-body>
+            </paper-item>
+          </app-toolbar>
+          <app-toolbar class="tall">
+            <h1 main-title>{{_getSubtitle(page,listingPayload)}}</h1>
+          </app-toolbar>
+        </app-header>
+
+        <iron-pages
+            selected="[[page]]"
+            attr-for-selected="name"
+            fallback-selection="listing-404"
+            role="main">
+          <jrealty-home name="home"></jrealty-home>
+          <jrealty-listings listings="[[ listings.farmandland ]]" listings-ready="[[listings.ready]]" name="farm-and-land"></jrealty-listings>
+          <jrealty-listings listings="[[ listings.commercial ]]" listings-ready="[[listings.ready]]" name="commercial"></jrealty-listings>
+          <jrealty-listings listings="[[ listings.residential ]]" listings-ready="[[listings.ready]]" name="residential"></jrealty-listings>
+          <jrealty-listings listings="[[ listings.multiresidential ]]" listings-ready="[[listings.ready]]" name="multi-residential"></jrealty-listings>
+          <jrealty-listings listings="[[ listings.forleaserent ]]" listings-ready="[[listings.ready]]" name="for-lease-rent"></jrealty-listings>
+          <jrealty-listing listings-ready="[[listings.ready]]" name="listing" payload="[[listingPayload]]"></jrealty-listing>
+          <listing-404 name="listing-404"></listing-404>
+        </iron-pages>
+      </app-header-layout>
+    </app-drawer-layout>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'jrealty-main',
+
+      properties: {
+      	listings: {
+          type: Object,
+          value: {
+          	"farmandland": [],
+          	"residential": [],
+          	"multiresidential": [],
+          	"commercial": [],
+          	"forleaserent": [],
+          	"ready": false,
+          	"error": false
+          }
+        },
+        listingPayload: {
+        	type: Object,
+        	value: {'validListing': false}
+        },
+        desktop: {
+          type: Boolean
+        },
+        defaultHeader: {
+          type: String,
+          value: 'url(../../images/TimPool.jpg)'
+        },
+        errorHeader: {
+          type: String,
+          value: 'url(../../images/TimPool.jpg)'
+        },
+        listingTypes: {
+          type: Array,
+          value: [
+            {
+              "id": "farm-and-land", 
+              "human_readable": "Farm & Land",
+              "header": "url(../../images/farmandlandheader.jpg)"
+            },
+            {
+              "id": "commercial", 
+              "human_readable": "Commercial",
+              "header": "url(../../images/commercialheader.jpg)"
+            },
+            {
+              "id": "residential", 
+              "human_readable": "Residential",
+              "header": "url(../../images/residentialheader.jpg)"
+            },
+            {
+              "id": "multi-residential", 
+              "human_readable": "Multi-Residential",
+              "header": "url(../../images/multiresidentialheader.jpg)"
+            },
+            {
+              "id": "for-lease-rent", 
+              "human_readable": "For Lease/Rent",
+              "header": "url(../../images/forleaserentheader.jpg)"
+            }
+          ],
+          readOnly: true
+        },
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged',
+        },
+      },
+
+      observers: [
+        '_routePageChanged(routeData.page)',
+        '_setListingPayload(subroute.path)'
+      ],
+
+      attached: function() {
+        var defaultHeader_ = (this.desktop) ? 'url(../../images/TimPool.gif)' : 'url(../../images/TimPool.jpg)'
+        this.set('defaultHeader',defaultHeader_);
+        this.set('errorHeader',defaultHeader_);
+        this._updateHeaderImage();
+        window.dispatchEvent( new Event('ensureSplashRemoved') );
+      },
+
+      _listingsResponse: function(event, response) {
+        var resp = response.response;
+        if (resp) {
+          this.set('listings',resp);
+          this._setListingPayload(this.subroute.path);
+          this.set('listings.ready',true);
+        }
+        else {
+          this._failedListingsResponse();
+        }
+      },
+      _failedListingsResponse: function(event, response) {
+        this.set('listings', {
+         "farmandland": [],
+         "residential": [],
+         "multiresidential": [],
+         "commercial": [],
+         "forleaserent": [],
+         "ready": false,
+         "error": true
+        });
+        this._setListingPayload(this.subroute.path);
+        this.set('listings.ready',true);
+      },
+
+      _updateHeaderImage: function() {
+        var url = this.errorHeader;
+        var listingsObject = _.find(this.listingTypes, {'id': this.page});
+        if (listingsObject) {
+          url = listingsObject.header;
+        }
+        else if (this.page === "home") {
+          url = this.defaultHeader;
+        }
+        else if (this.page === "listing" && this.listingPayload.validListing) {
+          url = "url(" + this.listingPayload.listing.photos[0].url + ")"
+		}
+        this.customStyle['--app-header-url'] = url;
+        this.updateStyles();
+      },
+
+      _determineHeaderStyle: function(_desktop) {
+        return (_desktop) ? "height:50%;" : ""
+      },
+
+      _getSubtitle: function(page,listingPayload) {
+        var listingType_ = _.find(this.listingTypes, {'id': page})
+        if (listingType_) {
+          return listingType_.human_readable;
+        }
+        else if (page === 'listing' && this.listingPayload.validListing) {
+        	return this.listingPayload.listing.title
+        }
+        else if (page === 'home' && this.desktop) {
+          return "Welcome to Jacobson Realty Online"
+        }
+        return ""
+      },
+      _setListingPayload: function(subpath) {
+        if (subpath.indexOf('/') === 0) {
+          var result_ = {
+        	"validListing": false
+          }
+          var id_ = subpath.split('/')[1];
+          for (var i in this.listingTypes) {
+          	var listing_ = _.find(this.listings[this.listingTypes[i].id.replace(/-/g,'')], function(o) {return o.id === id_})
+          	if (listing_) {
+          		result_.validListing = true;
+          		result_.listing = listing_;
+          		break;
+          	}
+          }
+          this.set('listingPayload',result_);
+          this._updateHeaderImage();
+        }
+        else {
+        	this.set('listingPayload',{"validListing": false});
+        }
+      },
+
+      _routePageChanged: function(page) {
+        this.page = page || 'home';
+      },
+
+      _pageChanged: function(page) {
+        // Load page import on demand. Show 404 page if fails
+        var resolvedPageUrl = this.resolveUrl('listing-404.html')
+        if (page === "home") {
+          resolvedPageUrl = this.resolveUrl('jrealty-home.html');
+        }
+        else if (page === "listing") {
+          resolvedPageUrl = this.resolveUrl('jrealty-listing.html');
+        }
+        else if (_.find(this.listingTypes, {'id': page})) {
+          resolvedPageUrl = this.resolveUrl('jrealty-listings.html');
+        }
+        this._updateHeaderImage();
+        this.importHref(resolvedPageUrl, null, this._showPage404, true);
+      },
+
+      _showPage404: function() {
+        this.page = 'listing-404';
+      },
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,198 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="jrealty-listing">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+      .page {
+        width: 100%;
+      }
+      .grey-page {
+        background: var(--paper-blue-grey-50);
+        color: #000000;
+      }
+      .dark-grey-page {
+        background: var(--paper-blue-grey-900);
+      }
+      paper-tabs {
+        background: var(--app-avatar-color);
+        --paper-tabs-selection-bar-color: var(--app-accent-color);
+        color: #FFF;
+      }
+      paper-tab {
+        --paper-tab-ink: var(--app-accent-color);
+      }
+      .long-info-wrapper {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+        @apply(--layout-wrap);
+        padding: 0 0 20px 0;
+      }
+      .long-info-wrapper p {
+        color: rgba(0,0,0,0.7);
+      }
+
+      .long-info-section {
+        text-align: center;
+        max-width: 400px;
+        width: 400px;
+        margin: 0 20px;
+        padding: 20px;
+      }
+
+      paper-card.long-info-section {
+        margin-top: 20px;
+        @apply(--layout-self-start);
+      }
+
+      .pre-wrap {
+        text-align: left;
+        white-space: pre-wrap;
+      }
+
+      .photo-page {
+        margin: 10px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+        @apply(--layout-wrap);
+      }
+
+      .media-card {
+        margin: 10px;
+        min-height: 300px;
+        min-width: 300px;
+      }
+
+
+      @media screen and (min-width: 769px){
+        .media-card {
+          height: 50vh;
+          width: calc(50% - 20px);
+        }
+      }
+      @media screen and (max-width: 768px){
+        .media-card {
+          height: calc(100vw - 40px);
+          width: calc(100vw - 40px);
+        }
+      }
+
+    </style>
+    <template is="dom-if" if="{{!listingsReady}}">
+      <div class="loadingContainer">
+        <div class="loadingParent">
+           <img src="../../images/JRLogo.png" class="avatar transparent-avatar loading-avatar"/>
+           <div class="loader">
+            <span class="dot dot_1"></span>
+            <span class="dot dot_2"></span>
+            <span class="dot dot_3"></span>
+            <span class="dot dot_4"></span>
+           </div>
+        </div>
+       </div>
+     </template>
+     <div id="listingContainer">
+       <template is="dom-if" if="{{listingsReady}}">
+        <template is="dom-if" if="{{payload.validListing}}">
+          <paper-tabs attr-for-selected="name" selected="{{listingInfoType}}">
+            <paper-tab name="details">Details</paper-tab>
+            <paper-tab name="photos">Photos</paper-tab>
+            <paper-tab name="videos">Videos</paper-tab>
+            <paper-tab name="downloads">Downloads</paper-tab>
+          </paper-tabs>
+          <iron-pages attr-for-selected="name" selected="{{listingInfoType}}">
+            <div name="details" class="page">
+              <div class="long-info-wrapper">
+                <paper-card id="long-info-section-1" class="long-info-section">
+                  <img src="../../images/JRLogo.png" class="avatar transparent-avatar"/>
+                  <h3>Address</h3>
+                  <p>[[payload.listing.address]]</p>
+                  <paper-item>
+                    <paper-item-body two-line>
+                      <div>[[payload.listing.status]]</div>
+                      <div secondary>Status</div>
+                    </paper-item-body>
+                  </paper-item>
+                  <paper-item>
+                    <paper-item-body two-line>
+                      <div>[[_getMoneyString(payload.listing.price)]]</div>
+                      <div secondary>Price</div>
+                    </paper-item-body>
+                  </paper-item>
+                </paper-card>
+                <paper-card id="long-info-section-2" class="long-info-section">
+                  <img src="../../images/JRLogo.png" class="avatar transparent-avatar"/>
+                  <h3>Details</h3>
+                  <p class="pre-wrap">[[payload.listing.details]]</p>
+                </paper-card>
+                <paper-card id="long-info-section-3" class="long-info-section">
+                  <img src="../../images/JRLogo.png" class="avatar transparent-avatar"/>
+                  <h3>Features</h3>
+                  <p class="pre-wrap">[[payload.listing.features]]</p>  
+                </paper-card>
+              </div>
+            </div>
+            <div name="photos" class="photo-page">
+              <template is="dom-repeat" items="[[payload.listing.photos]]">
+                <paper-card class="media-card">
+                  <iron-image style="width:100%; height:100%" sizing="contain" src="[[item.url]]"></iron-image>
+                </paper-card>
+              </template>
+            </div>
+            <div name="videos"></div>
+            <div name="downloads"></div>
+          </iron-pages>
+        </template>
+        <template is="dom-if" if="{{!payload.validListing}}">
+          <div class="card">
+            <h1>Error Not a valid listing</h1>
+          </div>
+        </template>
+      </template>
+    </div>
+  </template> 
+  <script>
+    Polymer({
+      is: 'jrealty-listing',
+      properties: {
+        name: {
+          type: String
+        },
+        payload: {
+          type: Object,
+          observer: '_payloadChanged'
+        },
+        listingsReady: {
+          type: Boolean,
+          value: false
+        },
+        listingInfoType: {
+          type: String,
+          value: 'details'
+        }
+      },
+      _getMoneyString: function(price) {
+        if (price) {
+          return price.toLocaleString('en-US', { style: 'currency', currency: 'USD' }).split('.')[0];
+        }
+        return "Call for price"
+      },
+      _payloadChanged: function(payload_) {
+        this.set('listingInfoType','details')
+      }
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,19 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/jrealty-main.html",
+  "fragments": [
+    "src/jrealty-home.html",
+    "src/jrealty-listings.html",
+    "src/jrealty-listing.html",
+    "src/listing-404.html"
+  ],
+  "sources": [
+    "src/**/*",
+    "images/**/*",
+    "bower.json"
+  ],
+  "extraDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
+  ]
+}
