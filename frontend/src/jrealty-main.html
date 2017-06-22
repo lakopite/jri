@@ -23,6 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-icons/editor-icons.html">
@@ -39,12 +40,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="jrealty-main">
   <template>
     <iron-media-query query="only screen and (min-device-width : 1025px) " full query-matches="{{desktop}}"></iron-media-query>
-    <iron-ajax auto url="<URL HERE>" method="GET" handleAs="json" on-error="_listingsResponse" on-response="_listingsResponse"></iron-ajax>
+    <iron-ajax auto url="<INSERT HERE>" method="GET" handleAs="json" on-error="_listingsResponse" on-response="_listingsResponse"></iron-ajax>
     <style>
       :host {
         --app-avatar-color: #607D8B;
@@ -193,7 +196,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <jrealty-listings listings="[[ listings.residential ]]" listings-ready="[[listings.ready]]" name="residential"></jrealty-listings>
           <jrealty-listings listings="[[ listings.multiresidential ]]" listings-ready="[[listings.ready]]" name="multi-residential"></jrealty-listings>
           <jrealty-listings listings="[[ listings.forleaserent ]]" listings-ready="[[listings.ready]]" name="for-lease-rent"></jrealty-listings>
-          <jrealty-listing listings-ready="[[listings.ready]]" name="listing" payload="[[listingPayload]]"></jrealty-listing>
+          <jrealty-listing desktop="[[desktop]]" listings-ready="[[listings.ready]]" name="listing" payload="[[listingPayload]]"></jrealty-listing>
           <listing-404 name="listing-404"></listing-404>
         </iron-pages>
       </app-header-layout>

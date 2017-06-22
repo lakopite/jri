@@ -12,13 +12,15 @@
     "gsap": "~1.19.1",
     "lodash": "~4.17.4",
     "paper-elements": "PolymerElements/paper-elements#~1.0.7",
-    "iron-elements": "PolymerElements/iron-elements#~1.0.10"
+    "iron-elements": "PolymerElements/iron-elements#~1.0.10",
+    "neon-animation": "PolymerElements/neon-animation#~2.0.1"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
   },
   "private": true,
   "resolutions": {
-    "lodash": "~4.17.4"
+    "lodash": "~4.17.4",
+    "neon-animation": "^1.0.0"
   }
 }

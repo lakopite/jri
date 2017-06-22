@@ -59,6 +59,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var removeSplash = function() {
         var loadEl = document.getElementById('splash');
         loadEl.style.display = 'none';
+        // var modalEl = document.getElementById('photo-modal');
+        // modalEl.hidden = false;
         // App is visible!
       };
 
@@ -269,6 +271,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </div>
     <jrealty-main></jrealty-main>
+    <paper-dialog with-backdrop hidden style="height: 100%; width: 100%;" id="photo-modal">
+      <div style="height: 100%; width: 100%; background-color: #FFFFFF; margin: 0; padding: 0;">
+        <iron-image preload id="featured-photo" style="height:100%;width:100%;background-color:#FFFFFF;" sizing="contain">
+        </iron-image>
+      </div>
+      <div style="position: absolute; top: 0; left: 0;">
+        <paper-fab icon="close" mini="true" style="background:#263238;color:#FFF;" dialog-confirm autofocus></paper-fab>
+      </div>
+    </paper-dialog>
     <!-- Built with love using Polymer Starter Kit -->
   </body>
 </html>

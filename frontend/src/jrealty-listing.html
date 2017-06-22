@@ -35,17 +35,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       paper-tab {
         --paper-tab-ink: var(--app-accent-color);
       }
-      .long-info-wrapper {
+      .long-info-wrapper, .download-info-wrapper {
         @apply(--layout-horizontal);
         @apply(--layout-center-justified);
         @apply(--layout-wrap);
         padding: 0 0 20px 0;
       }
-      .long-info-wrapper p {
+      .long-info-wrapper p, .download-info-wrapper p {
         color: rgba(0,0,0,0.7);
       }
 
-      .long-info-section {
+      .long-info-section, .download-info-section {
         text-align: center;
         max-width: 400px;
         width: 400px;
@@ -58,35 +58,52 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-self-start);
       }
 
+      paper-card.download-info-section {
+        margin-top: 20px;
+      }
+
+      .download-info-section paper-button {
+        color: var(--app-accent-color);
+      }
+
+      .download-info-section paper-button, .download-info-section a {
+        cursor: pointer;
+        text-decoration: none;
+      }
+      
       .pre-wrap {
         text-align: left;
         white-space: pre-wrap;
       }
 
       .photo-page {
-        margin: 10px;
-        @apply(--layout-horizontal);
-        @apply(--layout-center-justified);
-        @apply(--layout-wrap);
+        margin: 12px 0;
       }
 
-      .media-card {
-        margin: 10px;
-        min-height: 300px;
-        min-width: 300px;
+      .photoContent {
+        @apply --layout;
+        background-color: var(--paper-blue-grey-200);
+        position: relative;
+        width: 300px;
+        height: 300px;
+        margin: 8px;
+        cursor: pointer;
+      }
+      .photoContent > iron-image {
+        @apply --layout-flex;
       }
 
-
-      @media screen and (min-width: 769px){
-        .media-card {
-          height: 50vh;
-          width: calc(50% - 20px);
+      @media (max-width: 800px) {
+        .photoContainer {
+          width: calc(50% - 16px);
+        }
+        .photoContent {
+          width: auto;
         }
       }
-      @media screen and (max-width: 768px){
-        .media-card {
-          height: calc(100vw - 40px);
-          width: calc(100vw - 40px);
+      @media (max-width: 400px) {
+        .photoContainer {
+          width: 100%;
         }
       }
 
@@ -146,14 +163,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>
             </div>
             <div name="photos" class="photo-page">
-              <template is="dom-repeat" items="[[payload.listing.photos]]">
-                <paper-card class="media-card">
-                  <iron-image style="width:100%; height:100%" sizing="contain" src="[[item.url]]"></iron-image>
-                </paper-card>
-              </template>
+              <iron-list selection-enabled items="[[payload.listing.photos]]" on-selected-item-changed="_photoSelected" selected-item="{{selectedPhoto}}" scroll-target="document" as="photo" grid>
+                <template>
+                  <div class="photoContainer">
+                    <div class="photoContent" tabindex$="[[tabIndex]]">
+                      <iron-image sizing="cover"
+                          src="[[photo.url]]?w=300&h=300">
+                      </iron-image>
+                    </div>
+                  </div>
+                </template>
+              </iron-list>
             </div>
             <div name="videos"></div>
-            <div name="downloads"></div>
+            <div name="downloads" class="page">
+              <div class="download-info-wrapper">
+                <template is="dom-repeat" items="[[payload.listing.downloads]]">
+                  <paper-card class="download-info-section">
+                    <img src="../../images/JRLogo.png" class="avatar transparent-avatar"/>
+                    <div style="width: 100%">
+                      <a target="_blank" href="[[item.url]]" tabindex="-1">
+                        <paper-button raised>[[item.fileName]]</paper-button>
+                      </a>
+                    </div>
+                  </paper-card>
+                </template>
+              </div>
+            </div>
           </iron-pages>
         </template>
         <template is="dom-if" if="{{!payload.validListing}}">
@@ -184,6 +220,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: 'details'
         }
       },
+      _photoSelected: function() {
+        if (this.desktop) {
+          var this_ = this;
+          setTimeout(function() {
+            var modalEl = Polymer.dom(document).querySelector('#photo-modal')
+            if (this_.selectedPhoto && !modalEl.opened) {
+              modalEl.querySelector('#featured-photo').src = this_.selectedPhoto.url;
+              modalEl.open();
+            }
+          },0);
+        }
+      },
       _getMoneyString: function(price) {
         if (price) {
           return price.toLocaleString('en-US', { style: 'currency', currency: 'USD' }).split('.')[0];
@@ -192,6 +240,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _payloadChanged: function(payload_) {
         this.set('listingInfoType','details')
+        if (this.desktop) {
+          var modalEl = Polymer.dom(document).querySelector('#photo-modal');
+          if (this.payload.validListing) {
+            modalEl.hidden = false;
+          }
+          else {
+            modalEl.hidden = true;
+          }
+        }
       }
     });
   </script>
