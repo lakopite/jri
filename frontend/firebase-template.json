@@ -1,0 +1,18 @@
+{
+  "firebase": "_FIREBASE_NAME_",
+  "public": "./",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ],
+  "rewrites": [ {
+      "source": "**/!(*.js|*.html|*.css|*.json|*.svg|*.png|*.jpg|*.jpeg)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "!/__/**",
+      "destination": "/index.html"
+    }
+   ]
+}
