@@ -99,13 +99,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .video-page {
         @apply(--layout-horizontal);
         @apply(--layout-center-justified);
-        margin: 20px;
-      }
-
-      .video-card {
-        @apply(--layout-self-center);
-        @apply(--layout-vertical);
-        @apply(--layout-center-justified);
+        margin: 1em 0;
       }
 
       paper-card.auto-resizable-iframe {
@@ -214,9 +208,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
             <div name="videos" class="video-page">
               <template is="dom-if" if="{{_hasValidVideo}}">
-                <!-- <paper-card class="video-card">
-                  <iframe class="video-frame" height="315" width="420" src="[[payload.listing.youtube]]" frameborder="0" allowfullscreen></iframe>
-                </paper-card> -->
                 <paper-card class="auto-resizable-iframe">
                   <div>
                     <iframe src="[[payload.listing.youtube]]" frameborder="0" allowfullscreen></iframe>
