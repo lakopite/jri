@@ -47,8 +47,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         .listing-card-details { color: var(--app-accent-color); }
 
-        .listing-card-light { 
-          color: var(--paper-grey-600); 
+        .listing-card-light {
+          color: var(--paper-grey-600);
           white-space: pre-wrap;
         }
 
@@ -93,9 +93,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <paper-item>{{item.status}}</paper-item>
                   <paper-item>{{_getMoneyString(item.price)}}</paper-item>
                 </div>
-                <a class="detail-button" href="[[getHref(item.id)]]" tabindex="-1">  
+                <a class="detail-button" href="[[getHref(item.id)]]" tabindex="-1">
                   <paper-button class="listing-card-details">More Details</paper-button>
-                </a>   
+                </a>
               </div>
             </paper-card>
           </template>
@@ -119,8 +119,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
       isEmpty: function(a) {
-        console.log(a);
-        console.log(_.isEmpty(a));
         return _.isEmpty(a);
       },
       getHref: function(id_) {

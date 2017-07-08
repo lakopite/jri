@@ -92,6 +92,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply --layout-flex;
       }
 
+      paper-tab[disabled] {
+        color: rgba(0,0,0,0.2);
+      }
+
       .video-page {
         @apply(--layout-horizontal);
         @apply(--layout-center-justified);
@@ -102,6 +106,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-self-center);
         @apply(--layout-vertical);
         @apply(--layout-center-justified);
+      }
+
+      paper-card.auto-resizable-iframe {
+        min-width: 300px;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 1em;
+        width: 95%;
+      }
+
+      .auto-resizable-iframe > div {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0px;
+      }
+
+      .auto-resizable-iframe iframe {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
       }
 
       @media (max-width: 800px) {
@@ -138,7 +164,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-tabs attr-for-selected="name" selected="{{listingInfoType}}">
             <paper-tab name="details">Details</paper-tab>
             <paper-tab name="photos">Photos</paper-tab>
-            <paper-tab name="videos">Videos</paper-tab>
+            <paper-tab disabled$="{{!_hasValidVideo}}" name="videos">Videos</paper-tab>
             <paper-tab name="downloads">Downloads</paper-tab>
           </paper-tabs>
           <iron-pages attr-for-selected="name" selected="{{listingInfoType}}">
@@ -187,9 +213,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </iron-list>
             </div>
             <div name="videos" class="video-page">
-              <!-- <paper-card class="video-card" style="height: 420px; width: 420px;">
-                <iframe class="video-frame" height="315" width="420" src="[[payload.listing.youtube]]" frameborder="0" allowfullscreen></iframe>
-              </paper-card> -->
+              <template is="dom-if" if="{{_hasValidVideo}}">
+                <!-- <paper-card class="video-card">
+                  <iframe class="video-frame" height="315" width="420" src="[[payload.listing.youtube]]" frameborder="0" allowfullscreen></iframe>
+                </paper-card> -->
+                <paper-card class="auto-resizable-iframe">
+                  <div>
+                    <iframe src="[[payload.listing.youtube]]" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </paper-card>
+              </template>
             </div>
             <div name="downloads" class="page">
               <div class="download-info-wrapper">
@@ -233,8 +266,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         listingInfoType: {
           type: String,
           value: 'details'
+        },
+        _hasValidVideo: {
+          type: Boolean,
+          value: false
         }
       },
+      observers: [
+        '_listingChanged(payload.listing)'
+      ],
       _photoSelected: function() {
         if (this.desktop) {
           var this_ = this;
@@ -252,6 +292,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           return price.toLocaleString('en-US', { style: 'currency', currency: 'USD' }).split('.')[0];
         }
         return "Call for price"
+      },
+      _listingChanged(listing_) {
+        if (listing_) {
+          this._hasValidVideo = _.has(this.payload.listing,'youtube');
+        }
+        else {this._hasValidVideo = false;}
       },
       _payloadChanged: function(payload_) {
         this.set('listingInfoType','details')
