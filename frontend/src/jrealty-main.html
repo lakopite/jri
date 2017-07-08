@@ -47,7 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="jrealty-main">
   <template>
     <iron-media-query query="only screen and (min-device-width : 1025px) " full query-matches="{{desktop}}"></iron-media-query>
-    <iron-ajax auto url="<INSERT HERE>" method="GET" handleAs="json" on-error="_listingsResponse" on-response="_listingsResponse"></iron-ajax>
+    <iron-ajax auto url="[[url]]" method="GET" handleAs="json" on-error="_listingsResponse" on-response="_listingsResponse"></iron-ajax>
     <style>
       :host {
         --app-avatar-color: #607D8B;
@@ -56,6 +56,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --app-primary-color: #263238;
         --app-accent-color: #00BCD4;
         display: block;
+      }
+
+      app-drawer-layout:-webkit-full-screen-ancestor app-header,
+      app-drawer-layout:-webkit-full-screen-ancestor app-drawer {
+        z-index: -1 !important;
       }
 
       app-header {
@@ -220,6 +225,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           	"error": false
           }
         },
+        url: {
+          type: String,
+          //CI Pipeline will replace this with production url
+          value: _BACKEND_URL_,
+          readOnly: true
+        }
         listingPayload: {
         	type: Object,
         	value: {'validListing': false}
@@ -239,27 +250,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Array,
           value: [
             {
-              "id": "farm-and-land", 
+              "id": "farm-and-land",
               "human_readable": "Farm & Land",
               "header": "url(../../images/farmandlandheader.jpg)"
             },
             {
-              "id": "commercial", 
+              "id": "commercial",
               "human_readable": "Commercial",
               "header": "url(../../images/commercialheader.jpg)"
             },
             {
-              "id": "residential", 
+              "id": "residential",
               "human_readable": "Residential",
               "header": "url(../../images/residentialheader.jpg)"
             },
             {
-              "id": "multi-residential", 
+              "id": "multi-residential",
               "human_readable": "Multi-Residential",
               "header": "url(../../images/multiresidentialheader.jpg)"
             },
             {
-              "id": "for-lease-rent", 
+              "id": "for-lease-rent",
               "human_readable": "For Lease/Rent",
               "header": "url(../../images/forleaserentheader.jpg)"
             }

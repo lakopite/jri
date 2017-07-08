@@ -2,3 +2,5 @@ bower_components/
 build/
 node_modules/
 firebase.json
+package-lock.json
+local_settings.js

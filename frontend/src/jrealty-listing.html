@@ -28,9 +28,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background: var(--paper-blue-grey-900);
       }
       paper-tabs {
-        background: var(--app-avatar-color);
+        color: var(--paper-blue-grey-900);
         --paper-tabs-selection-bar-color: var(--app-accent-color);
-        color: #FFF;
       }
       paper-tab {
         --paper-tab-ink: var(--app-accent-color);
@@ -70,7 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         cursor: pointer;
         text-decoration: none;
       }
-      
+
       .pre-wrap {
         text-align: left;
         white-space: pre-wrap;
@@ -91,6 +90,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .photoContent > iron-image {
         @apply --layout-flex;
+      }
+
+      .video-page {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+        margin: 20px;
+      }
+
+      .video-card {
+        @apply(--layout-self-center);
+        @apply(--layout-vertical);
+        @apply(--layout-center-justified);
       }
 
       @media (max-width: 800px) {
@@ -158,7 +169,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-card id="long-info-section-3" class="long-info-section">
                   <img src="../../images/JRLogo.png" class="avatar transparent-avatar"/>
                   <h3>Features</h3>
-                  <p class="pre-wrap">[[payload.listing.features]]</p>  
+                  <p class="pre-wrap">[[payload.listing.features]]</p>
                 </paper-card>
               </div>
             </div>
@@ -175,7 +186,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </template>
               </iron-list>
             </div>
-            <div name="videos"></div>
+            <div name="videos" class="video-page">
+              <!-- <paper-card class="video-card" style="height: 420px; width: 420px;">
+                <iframe class="video-frame" height="315" width="420" src="[[payload.listing.youtube]]" frameborder="0" allowfullscreen></iframe>
+              </paper-card> -->
+            </div>
             <div name="downloads" class="page">
               <div class="download-info-wrapper">
                 <template is="dom-repeat" items="[[payload.listing.downloads]]">
@@ -199,7 +214,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </template>
       </template>
     </div>
-  </template> 
+  </template>
   <script>
     Polymer({
       is: 'jrealty-listing',
