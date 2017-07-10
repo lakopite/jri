@@ -47,7 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="jrealty-main">
   <template>
     <iron-media-query query="only screen and (min-device-width : 1025px) " full query-matches="{{desktop}}"></iron-media-query>
-    <iron-ajax auto url="[[url]]" method="GET" handleAs="json" on-error="_listingsResponse" on-response="_listingsResponse"></iron-ajax>
+    <iron-ajax headers="[[chaliceKey]]" auto url="[[url]]" method="GET" handleAs="json" on-error="_listingsResponse" on-response="_listingsResponse"></iron-ajax>
     <style>
       :host {
         --app-avatar-color: #607D8B;
@@ -229,6 +229,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           //CI Pipeline will replace this with production url
           value: _BACKEND_URL_,
+          readOnly: true
+        },
+        chaliceKey: {
+          type: Object,
+          value: {
+            'x-api-key': _CHALICE_KEY_
+          },
           readOnly: true
         },
         listingPayload: {

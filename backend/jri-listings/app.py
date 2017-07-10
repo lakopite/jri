@@ -16,7 +16,7 @@ category_map = {
  "For Lease/Rent": "forleaserent"
 }
 
-@app.route('/listings', methods=['GET'], cors=True)
+@app.route('/listings', methods=['GET'], cors=True, api_key_required=True)
 def index():
 	result = {
 	 "farmandland": [],
