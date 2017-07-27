@@ -52,7 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         --app-avatar-color: #607D8B;
         --app-secondary-color: black;
-        --app-header-url: url(../../images/TimPool.jpg);
+        --app-header-url: url(../../images/JrealtyHeader.jpg);
         --app-primary-color: #263238;
         --app-accent-color: #00BCD4;
         display: block;
@@ -247,11 +247,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         defaultHeader: {
           type: String,
-          value: 'url(../../images/TimPool.jpg)'
+          value: 'url(../../images/JrealtyHeader.jpg)'
         },
         errorHeader: {
           type: String,
-          value: 'url(../../images/TimPool.jpg)'
+          value: 'url(../../images/JrealtyHeader.jpg)'
         },
         listingTypes: {
           type: Array,
@@ -297,7 +297,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       attached: function() {
-        var defaultHeader_ = (this.desktop) ? 'url(../../images/TimPool.gif)' : 'url(../../images/TimPool.jpg)'
+        var defaultHeader_ = (this.desktop) ? 'url(../../images/JrealtyHeader.gif)' : 'url(../../images/JrealtyHeader.jpg)'
         this.set('defaultHeader',defaultHeader_);
         this.set('errorHeader',defaultHeader_);
         this._updateHeaderImage();
@@ -369,7 +369,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
           var id_ = subpath.split('/')[1];
           for (var i in this.listingTypes) {
-          	var listing_ = _.find(this.listings[this.listingTypes[i].id.replace(/-/g,'')], function(o) {return o.id === id_})
+          	var listing_ = _.find(this.listings[this.listingTypes[i].id.replace(/-/g,'')], function(o) {return o.slug === id_})
           	if (listing_) {
           		result_.validListing = true;
           		result_.listing = listing_;
