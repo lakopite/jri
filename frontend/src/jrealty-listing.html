@@ -284,7 +284,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         return "Call for price"
       },
-      _listingChanged(listing_) {
+      _listingChanged: function(listing_) {
         if (listing_) {
           this._hasValidVideo = _.has(this.payload.listing,'youtube');
         }
