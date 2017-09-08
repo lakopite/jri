@@ -46,7 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="jrealty-main">
   <template>
-    <iron-media-query query="only screen and (min-device-width : 1025px) " full query-matches="{{desktop}}"></iron-media-query>
+    <iron-media-query query="all and (min-device-width : 1025px) " full query-matches="{{desktop}}"></iron-media-query>
     <iron-ajax headers="[[chaliceKey]]" auto url="[[url]]" method="GET" handleAs="json" on-error="_listingsResponse" on-response="_listingsResponse"></iron-ajax>
     <style>
       :host {
@@ -97,9 +97,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: #fff;
         background-color: var(--app-primary-color);
         --app-header-background-front-layer: {
-          background-image: var(--app-header-url);
+          background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), var(--app-header-url);
           background-position: left center;
-          filter: brightness(60%);
         };
       }
 
