@@ -80,7 +80,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .photoContent {
-        @apply --layout;
+        @apply(--layout);
         background-color: var(--paper-blue-grey-200);
         position: relative;
         width: 300px;
@@ -89,7 +89,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         cursor: pointer;
       }
       .photoContent > iron-image {
-        @apply --layout-flex;
+        @apply(--layout-flex);
       }
 
       paper-tab[disabled] {
@@ -194,9 +194,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>
             </div>
             <div name="photos" class="photo-page">
-              <iron-list selection-enabled items="[[payload.listing.photos]]" on-selected-item-changed="_photoSelected" selected-item="{{selectedPhoto}}" scroll-target="document" as="photo" grid>
+              <iron-list items="[[payload.listing.photos]]" scroll-target="document" as="photo" grid>
                 <template>
-                  <div class="photoContainer">
+                  <div on-tap="_photoSelected" class="photoContainer">
                     <div class="photoContent" tabindex$="[[tabIndex]]">
                       <iron-image sizing="cover"
                           src="[[photo.url]]?w=300&h=300">
@@ -269,6 +269,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _photoSelected: function() {
         if (this.desktop) {
           var this_ = this;
+          this.selectedPhoto = e.model.__data__.photo;
           setTimeout(function() {
             var modalEl = Polymer.dom(document).querySelector('#photo-modal')
             if (this_.selectedPhoto && !modalEl.opened) {
