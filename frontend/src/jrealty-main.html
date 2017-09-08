@@ -133,6 +133,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: #FFFFFF;
       }
 
+      .home-scroll-links {
+        margin: 0 0 0 1em;
+      }
+
+      .scrollLink {
+        cursor: pointer;
+        color: #000000;
+      }
+
+      .scrollLink:hover {
+        color: var(--app-accent-color);
+      }
+
+      .theme-break {
+        margin-top: 2em;
+      }
+
+      .license-number {
+        color: var(--secondary-text-color);
+      }
+
       @media (max-width: 639px) {
         app-header [main-title] {
           margin-left: 50px;
@@ -160,14 +181,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!-- Drawer content -->
       <app-drawer id="drawer">
         <app-toolbar>Menu</app-toolbar>
+        <div style="height: calc(100% - 64px); overflow: auto;">
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="home" href="/home">Home</a>
-          <a name="farm-and-land" href="/farm-and-land">Farm and Land</a>
-          <a name="commercial" href="/commercial">Commercial</a>
-          <a name="residential" href="/residential">Residential</a>
-          <a name="multi-residential" href="/multi-residential">Multi-Residential</a>
-          <a name="for-lease-rent" href="/for-lease-rent">For Lease/Rent</a>
+          <a class="scrollLink" name="home" href="/home">Home</a>
+          <div class="home-scroll-links" hidden$="[[!_isHome(page)]]">
+            <a class="scrollLink" on-tap="_goAbout">About</a>
+            <a class="scrollLink" on-tap="_goListings">Listings</a>
+            <a class="scrollLink" on-tap="_goFirm">Firm</a>
+            <a class="scrollLink" on-tap="_goContact">Contact</a>
+          </div>
+          <a class="scrollLink" name="farm-and-land" href="/farm-and-land">Farm and Land</a>
+          <a class="scrollLink" name="commercial" href="/commercial">Commercial</a>
+          <a class="scrollLink" name="residential" href="/residential">Residential</a>
+          <a class="scrollLink" name="multi-residential" href="/multi-residential">Multi-Residential</a>
+          <a class="scrollLink" name="for-lease-rent" href="/for-lease-rent">For Lease/Rent</a>
         </iron-selector>
+        <paper-item class="theme-break license-number">License Numbers</paper-item>
+        <paper-item>
+          <paper-item-body two-line>
+            <div class="license-number">Jacobson Realty Office</div>
+            <div class="license-number" secondary>00305498</div>
+          </paper-item-body>
+        </paper-item>
+        <paper-item>
+          <paper-item-body two-line>
+            <div class="license-number">Lynn Osslund</div>
+            <div class="license-number" secondary>00623752</div>
+          </paper-item-body>
+        </paper-item>
+        <paper-item>
+          <paper-item-body two-line>
+            <div class="license-number">Lester Jacobson</div>
+            <div class="license-number" secondary>00148833</div>
+          </paper-item-body>
+        </paper-item>
+        <paper-item>
+          <paper-item-body two-line>
+            <div class="license-number">Jillian Bailey</div>
+            <div class="license-number" secondary>00806262</div>
+          </paper-item-body>
+        </paper-item>
+        </div>
       </app-drawer>
 
       <!-- Main content -->
@@ -189,13 +243,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <h1 main-title>{{_getSubtitle(page,listingPayload)}}</h1>
           </app-toolbar>
         </app-header>
-
         <iron-pages
             selected="[[page]]"
             attr-for-selected="name"
             fallback-selection="listing-404"
             role="main">
-          <jrealty-home name="home"></jrealty-home>
+          <jrealty-home id="jrealty-home-section" name="home"></jrealty-home>
           <jrealty-listings listings="[[ listings.farmandland ]]" listings-ready="[[listings.ready]]" name="farm-and-land"></jrealty-listings>
           <jrealty-listings listings="[[ listings.commercial ]]" listings-ready="[[listings.ready]]" name="commercial"></jrealty-listings>
           <jrealty-listings listings="[[ listings.residential ]]" listings-ready="[[listings.ready]]" name="residential"></jrealty-listings>
@@ -384,6 +437,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+      _isHome: function(page) {
+        return this.page === 'home'
+      },
+
+      _goListings: function() {
+        var scrollSection = this.$['jrealty-home-section'].$$('#current-listings')
+        if (scrollSection) {
+          scrollSection.scrollIntoView();
+        }
+      },
+
+      _goFirm: function() {
+        var scrollSection = this.$['jrealty-home-section'].$$('#firm-overview')
+        if (scrollSection) {
+          scrollSection.scrollIntoView();
+        }
+      },
+
+      _goAbout: function() {
+        var scrollSection = this.$['jrealty-home-section'].$$('#about')
+        if (scrollSection) {
+          scrollSection.scrollIntoView();
+        }
+      },
+
+      _goContact: function() {
+        var scrollSection = this.$['jrealty-home-section'].$$('#contact')
+        if (scrollSection) {
+          scrollSection.scrollIntoView();
+        }
+      },
+
       _routePageChanged: function(page) {
         this.page = page || 'home';
       },
@@ -402,6 +487,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         this._updateHeaderImage();
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
+        window.scrollTo(0,0);
       },
 
       _showPage404: function() {
