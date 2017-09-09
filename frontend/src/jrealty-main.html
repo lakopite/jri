@@ -392,7 +392,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         else if (this.page === "listing" && this.listingPayload.validListing) {
           url = "url(" + this.listingPayload.listing.photos[0].url + ")"
-		}
+		    }
         this.customStyle['--app-header-url'] = url;
         this.updateStyles();
       },
@@ -402,17 +402,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _getSubtitle: function(page,listingPayload) {
+        var result = ""
         var listingType_ = _.find(this.listingTypes, {'id': page})
         if (listingType_) {
-          return listingType_.human_readable;
+          result = listingType_.human_readable;
         }
         else if (page === 'listing' && this.listingPayload.validListing) {
-        	return this.listingPayload.listing.title
+        	result = this.listingPayload.listing.title
         }
         else if (page === 'home' && this.desktop) {
-          return "Welcome to Jacobson Realty Online"
+          result = "Welcome to Jacobson Realty Online"
         }
-        return ""
+
+        return (this.desktop || result.length <= 19) ? result : result.substring(0,19) + "..."
       },
       _setListingPayload: function(subpath) {
         if (subpath.indexOf('/') === 0) {
