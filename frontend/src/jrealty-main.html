@@ -137,6 +137,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 0 0 0 1em;
       }
 
+      .smallNavLink {
+        font-size: 13px;
+      }
+
       .scrollLink {
         cursor: pointer;
         color: #000000;
@@ -185,10 +189,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a class="scrollLink" name="home" href="/home">Home</a>
           <div class="nav-links" hidden$="[[!_isHome(page)]]">
-            <a class="scrollLink" on-tap="_goAbout">About</a>
-            <a class="scrollLink" on-tap="_goListings">Listings</a>
-            <a class="scrollLink" on-tap="_goFirm">Firm</a>
-            <a class="scrollLink" on-tap="_goContact">Contact</a>
+            <a class="scrollLink smallNavLink" on-tap="_goAbout">About</a>
+            <a class="scrollLink smallNavLink" on-tap="_goListings">Listings</a>
+            <a class="scrollLink smallNavLink" on-tap="_goFirm">Firm</a>
+            <a class="scrollLink smallNavLink" on-tap="_goContact">Contact</a>
           </div>
           <a class="scrollLink" name="farm-and-land" href="/farm-and-land">Farm and Land</a>
           <a class="scrollLink" name="commercial" href="/commercial">Commercial</a>
@@ -196,7 +200,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a class="scrollLink" name="multi-residential" href="/multi-residential">Multi-Residential</a>
           <a class="scrollLink" name="for-lease-rent" href="/for-lease-rent">For Lease/Rent</a>
           <div class="nav-links">
-            <a class="scrollLink" style="font-size: 14px;" href="//assets.contentful.com/et8ct0zss6ev/3MszNXAAfC8mWWus2qCsO4/0932f0f34cd90401f3e1cd887a0da685/Application_to_Rent_-_Residential.pdf">Residential Rental Application</a>
+            <a class="scrollLink smallNavLink" href="//assets.contentful.com/et8ct0zss6ev/3MszNXAAfC8mWWus2qCsO4/0932f0f34cd90401f3e1cd887a0da685/Application_to_Rent_-_Residential.pdf">Residential Rental Application</a>
           </div>
         </iron-selector>
         <paper-item class="theme-break license-number">License Numbers</paper-item>
