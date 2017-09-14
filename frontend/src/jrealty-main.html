@@ -133,7 +133,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: #FFFFFF;
       }
 
-      .home-scroll-links {
+      .nav-links {
         margin: 0 0 0 1em;
       }
 
@@ -184,7 +184,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div style="height: calc(100% - 64px); overflow: auto;">
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a class="scrollLink" name="home" href="/home">Home</a>
-          <div class="home-scroll-links" hidden$="[[!_isHome(page)]]">
+          <div class="nav-links" hidden$="[[!_isHome(page)]]">
             <a class="scrollLink" on-tap="_goAbout">About</a>
             <a class="scrollLink" on-tap="_goListings">Listings</a>
             <a class="scrollLink" on-tap="_goFirm">Firm</a>
@@ -195,6 +195,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a class="scrollLink" name="residential" href="/residential">Residential</a>
           <a class="scrollLink" name="multi-residential" href="/multi-residential">Multi-Residential</a>
           <a class="scrollLink" name="for-lease-rent" href="/for-lease-rent">For Lease/Rent</a>
+          <div class="nav-links">
+            <a class="scrollLink" style="font-size: 14px;" href="//assets.contentful.com/et8ct0zss6ev/3MszNXAAfC8mWWus2qCsO4/0932f0f34cd90401f3e1cd887a0da685/Application_to_Rent_-_Residential.pdf">Residential Rental Application</a>
+          </div>
         </iron-selector>
         <paper-item class="theme-break license-number">License Numbers</paper-item>
         <paper-item>
