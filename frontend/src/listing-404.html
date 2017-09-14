@@ -15,16 +15,66 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
+      }
+      .avatar {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        overflow: hidden;
+        @apply(--shadow-elevation-2dp);
+      }
 
-        padding: 10px 20px;
+      .transparent-avatar {
+        background: var(--app-avatar-color);
+      }
+      .long-info-wrapper {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+        padding: 0 0 20px 0;
+      }
+      .long-info-wrapper p {
+        color: rgba(0,0,0,0.7);
+      }
+      .long-info-section {
+        text-align: center;
+        max-width: 400px;
+        width: 400px;
+        margin: 0 20px;
+        padding: 20px;
+      }
+      paper-card.long-info-section {
+        margin-top: 20px;
+        @apply(--layout-self-start);
+      }
+
+      paper-button {
+        color: var(--app-accent-color);
+      }
+
+      paper-button, a {
+        cursor: pointer;
+        text-decoration: none;
       }
     </style>
-
-    <!-- 
-      If deploying in a folder replace href="/" with the full path to your site.
-      Such as: href=="http://polymerelements.github.io/polymer-starter-kit"
-    -->
-    Oops you hit a 404. <a href="/">Head back to home.</a>
+    <div class="long-info-wrapper">
+      <paper-card class="long-info-section">
+        <div class="card-content">
+          <img src="../../images/JRLogo.png" class="avatar transparent-avatar"/>
+          <h3>Welcome to Jacobson Realty</h3>
+          <p class="pre-wrap">The page you are trying to find has moved or no longer exists.
+            <br/><br/>Please head to our homepage to see if your listing is still available.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a href="/" tabindex="-1">
+            <paper-button raised>Homepage</paper-button>
+          </a>
+        </div>
+      </paper-card>
+    </div>
   </template>
 
   <script>
