@@ -159,7 +159,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-tab name="details">Details</paper-tab>
             <paper-tab name="photos">Photos</paper-tab>
             <paper-tab disabled$="{{!_hasValidVideo}}" name="videos">Videos</paper-tab>
-            <paper-tab name="downloads">Downloads</paper-tab>
+            <paper-tab disabled$="{{!_hasDownloads}}" name="downloads">Downloads</paper-tab>
           </paper-tabs>
           <iron-pages attr-for-selected="name" selected="{{listingInfoType}}">
             <div name="details" class="page">
@@ -221,7 +221,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <paper-card class="download-info-section">
                     <img src="../../images/JRLogo.png" class="avatar transparent-avatar"/>
                     <div style="width: 100%">
-                      <a target="_blank" href="[[item.url]]" tabindex="-1">
+                      <a href="[[item.url]]" tabindex="-1">
                         <paper-button raised>[[item.fileName]]</paper-button>
                       </a>
                     </div>
@@ -261,6 +261,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         _hasValidVideo: {
           type: Boolean,
           value: false
+        },
+        _hasDownloads: {
+          type: Boolean,
+          value: false
         }
       },
       observers: [
@@ -288,8 +292,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _listingChanged: function(listing_) {
         if (listing_) {
           this._hasValidVideo = _.has(this.payload.listing,'youtube');
+          this._hasDownloads = ("downloads" in listing_) && !_.isEmpty(this.payload.listing.downloads);
         }
-        else {this._hasValidVideo = false;}
+        else {
+          this._hasValidVideo = false;
+          this._hasDownloads = false;
+        }
       },
       _payloadChanged: function(payload_) {
         this.set('listingInfoType','details')
