@@ -53,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         --app-avatar-color: #607D8B;
         --app-secondary-color: black;
-        --app-header-url: url(../../images/JrealtyHeader.jpg);
+        --app-header-url: url(https://d36esvdfp2h2m8.cloudfront.net/JrealtyHeader.jpg);
         --app-primary-color: #263238;
         --app-accent-color: #00BCD4;
         display: block;
@@ -237,7 +237,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header style$="{{_determineHeaderStyle(desktop)}}" id="main-app-header" condenses fixed effects="waterfall resize-title blend-background parallax-background">
           <app-toolbar justify="justified">
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            <iron-image height="72" width="216" sizing="contain" src="../../images/headerlogo.png"></iron-image/>
+            <iron-image height="72" width="216" sizing="contain" src="https://d36esvdfp2h2m8.cloudfront.net/headerlogo.png"></iron-image/>
             <h4 condensed-title>{{_getSubtitle(page,listingPayload)}}</h4>
             <paper-item id="toolbar-number">
               <paper-item-body two-line>
@@ -307,11 +307,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         defaultHeader: {
           type: String,
-          value: 'url(../../images/JrealtyHeader.jpg)'
+          value: 'url(https://d36esvdfp2h2m8.cloudfront.net/JrealtyHeader.jpg)'
         },
         errorHeader: {
           type: String,
-          value: 'url(../../images/JrealtyHeader.jpg)'
+          value: 'url(https://d36esvdfp2h2m8.cloudfront.net/JrealtyHeader.jpg)'
         },
         listingTypes: {
           type: Array,
@@ -319,27 +319,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             {
               "id": "farm-and-land",
               "human_readable": "Farm & Land",
-              "header": "url(../../images/farmandlandheader.jpg)"
+              "header": "url(https://d36esvdfp2h2m8.cloudfront.net/farmandlandheader.jpg)"
             },
             {
               "id": "commercial",
               "human_readable": "Commercial",
-              "header": "url(../../images/commercialheader.jpg)"
+              "header": "url(https://d36esvdfp2h2m8.cloudfront.net/commercialheader.jpg)"
             },
             {
               "id": "residential",
               "human_readable": "Residential",
-              "header": "url(../../images/residentialheader.jpg)"
+              "header": "url(https://d36esvdfp2h2m8.cloudfront.net/residentialheader.jpg)"
             },
             {
               "id": "multi-residential",
               "human_readable": "Multi-Residential",
-              "header": "url(../../images/multiresidentialheader.jpg)"
+              "header": "url(https://d36esvdfp2h2m8.cloudfront.net/multiresidentialheader.jpg)"
             },
             {
               "id": "for-lease-rent",
               "human_readable": "For Lease/Rent",
-              "header": "url(../../images/forleaserentheader.jpg)"
+              "header": "url(https://d36esvdfp2h2m8.cloudfront.net/forleaserentheader.jpg)"
             }
           ],
           readOnly: true
@@ -357,7 +357,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       attached: function() {
-        var defaultHeader_ = (this.desktop) ? 'url(../../images/JrealtyHeader.gif)' : 'url(../../images/JrealtyHeader.jpg)'
+        var defaultHeader_ = (this.desktop) ? 'url(https://d36esvdfp2h2m8.cloudfront.net/JrealtyHeader.gif)' : 'url(https://d36esvdfp2h2m8.cloudfront.net/JrealtyHeader.jpg)'
         this.set('defaultHeader',defaultHeader_);
         this.set('errorHeader',defaultHeader_);
         this._updateHeaderImage();
