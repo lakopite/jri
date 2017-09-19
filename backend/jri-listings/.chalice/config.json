@@ -2,8 +2,11 @@
   "stages": {
     "dev": {
       "api_gateway_stage": "dev"
+    },
+    "prod": {
+      "api_gateway_stage": "api"
     }
-  }, 
-  "version": "2.0", 
+  },
+  "version": "2.0",
   "app_name": "jri-listings"
 }
