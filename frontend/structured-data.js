@@ -34,7 +34,7 @@ function parseStructuredData(items) {
         "description": i.details
       };
       if ("photos" in i && i.photos.length > 0) {item_.image = i.photos[0].url};
-      if ("price" in i && !_.isNaN(_.toNumber(i.price)) {
+      if ("price" in i && !_.isNaN(_.toNumber(i.price))) {
         item_.offers = {
           "@type": "Offer",
           "priceCurrency": "USD",
