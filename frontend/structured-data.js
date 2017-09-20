@@ -27,13 +27,10 @@ function parseStructuredData(items) {
       var item_ = {
         "@type": "ListItem",
         "position": index_ + 1,
-        "item": {
-          "@type": "SingleFamilyResidence",
-          "url": host + "listing/" + i.slug,
-          "name": i.title
-        }
-      }
-      if ("photos" in i && i.photos.length > 0) {item_.item.image = i.photos[0].url};
+        "url": host + "listing/" + i.slug,
+        "name": i.title
+      };
+      if ("photos" in i && i.photos.length > 0) {item_.image = i.photos[0].url};
       return item_
     })
   }
