@@ -25,8 +25,7 @@ function parseStructuredData(items) {
     "ItemListOrder": "Unordered",
     "itemListElement": _.map(items, function(i,index_) {
       var item_ = {
-        "@type": "ListItem",
-        "additionalType": ["SingleFamilyResidence","Product"],
+        "@type": ["ListItem","SingleFamilyResidence","Product"]
         "position": index_ + 1,
         "url": host + "listing/" + i.slug,
         "name": i.title,
