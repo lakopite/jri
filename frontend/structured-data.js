@@ -24,12 +24,15 @@ function parseStructuredData(key,items) {
     "ItemListOrder": "Unordered",
     "itemListElement": _.map(items, function(i,index_) {
       var item_ = {
-        "@type": "Product",
+        "@type": "ListItem",
         "position": index_ + 1,
-        "url": host + i.slug,
-        "name": i.title
+        "item": {
+          "@type": "Product",
+          "url": host + "listing/" + i.slug,
+          "name": i.title
+        }
       }
-      if ("photos" in i && i.photos.length > 0) {item_.image = i.photos[0].url};
+      if ("photos" in i && i.photos.length > 0) {item_.item.image = i.photos[0].url};
       return item_
     })
   }
