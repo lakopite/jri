@@ -26,11 +26,21 @@ function parseStructuredData(items) {
     "itemListElement": _.map(items, function(i,index_) {
       var item_ = {
         "@type": "ListItem",
+        "additionalType": ["SingleFamilyResidence","Product"],
         "position": index_ + 1,
         "url": host + "listing/" + i.slug,
-        "name": i.title
+        "name": i.title,
+        "address": i.address,
+        "description": i.details
       };
       if ("photos" in i && i.photos.length > 0) {item_.image = i.photos[0].url};
+      if ("price" in i && !_.isNaN(_.toNumber(i.price)) {
+        item_.offers = {
+          "@type": "Offer",
+          "priceCurrency": "USD",
+          "price": _.toNumber(i.price).toFixed(2)
+        }
+      }
       return item_
     })
   }
