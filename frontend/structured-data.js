@@ -15,11 +15,12 @@ var urlMap = {
   "forleaserent": "for-lease-rent"
 }
 
-function parseStructuredData(key,items) {
+function parseStructuredData(items) {
   var itemlist = {
     "@context": "http://schema.org",
     "@type": "ItemList",
-    "url": host + urlMap[key],
+    "url": host,
+    "name": "Current Listings",
     "numberOfItems": items.length,
     "ItemListOrder": "Unordered",
     "itemListElement": _.map(items, function(i,index_) {
@@ -27,7 +28,7 @@ function parseStructuredData(key,items) {
         "@type": "ListItem",
         "position": index_ + 1,
         "item": {
-          "@type": "Product",
+          "@type": "SingleFamilyResidence",
           "url": host + "listing/" + i.slug,
           "name": i.title
         }
@@ -47,12 +48,8 @@ fs.readFile(file, 'utf8', function (err,data) {
       if (error) {
           throw error;
       }
-      var respData = JSON.parse(body);
-      var structuredData = "";
-      for (var k in urlMap) {
-          if (k in respData && respData[k].length > 0) {structuredData += '\n\t<script type="application/ld+json">\n\t\t' + parseStructuredData(k,respData[k]) + "\n\t</script>"}
-      }
-      var payload = JSON.stringify(respData);
+      var b = JSON.parse(body);
+      var structuredData = '\n\t<script type="application/ld+json">\n\t\t' + parseStructuredData(_.concat(b.residential,b.commercial,b.farmandland,b.multiresidential,b.forleaserent)) + "\n\t</script>"
       var result = data.replace('<!-- dynamic structured data -->', structuredData);
 
       fs.writeFile(file, result, 'utf8', function (err) {
