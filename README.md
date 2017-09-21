@@ -1,8 +1,8 @@
 # JRI
 
 Frontend built using
-(https://www.polymer-project.org/ "Polymer")
+[Polymer](https://www.polymer-project.org/ "Polymer")
 
 Backend Powered by
-(https://www.contentful.com "Contentful")
-(http://chalice.readthedocs.io/en/latest/ "Chalice")
+[Contentful](https://www.contentful.com "Contentful")
+[Chalice](http://chalice.readthedocs.io/en/latest/ "Chalice")
