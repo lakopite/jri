@@ -3,4 +3,5 @@
 .chalice/deployed.json
 .chalice/policy.json
 .chalice/policy-prod.json
+.chalice/config.json
 *.pyc
