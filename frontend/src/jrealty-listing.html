@@ -207,10 +207,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </iron-list>
             </div>
             <div name="videos" class="video-page">
-              <template is="dom-if" if="{{_hasValidVideo}}">
+              <template is="dom-if" if="{{_hasValidVideo}}" restamp>
                 <paper-card class="auto-resizable-iframe">
                   <div>
-                    <iframe src="[[payload.listing.youtube]]" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="video-frame" src="[[_parseYTLink(payload.listing.youtube)]]" frameborder="0" allowfullscreen></iframe>
                   </div>
                 </paper-card>
               </template>
@@ -268,7 +268,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
       observers: [
-        '_listingChanged(payload.listing)'
+        '_listingChanged(payload.listing)',
+        '_ensurePausedVideo(listingInfoType)'
       ],
       _photoSelected: function(e) {
         if (this.desktop) {
@@ -283,6 +284,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },0);
         }
       },
+      _parseYTLink: function(ytLink) {
+        if (ytLink) {
+          return (ytLink.indexOf('?') === -1) ? ytLink + '?enablejsapi=1' : ytLink + '&enablejsapi=1'
+        }
+        return "https://d36esvdfp2h2m8.cloudfront.net/JrealtyHeader.gif"
+      },
+      _ensurePausedVideo: function(_listingInfoType) {
+        if (_listingInfoType != 'videos') {
+          var video_frame = this.$$('#video-frame');
+          if (video_frame) {
+            video_frame.contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
+          }
+        }
+      },
       _getMoneyString: function(price) {
         if (price) {
           return price.toLocaleString('en-US', { style: 'currency', currency: 'USD' }).split('.')[0];
@@ -291,7 +306,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _listingChanged: function(listing_) {
         if (listing_) {
-          this._hasValidVideo = _.has(this.payload.listing,'youtube');
+          this._hasValidVideo = _.has(this.payload.listing,'youtube') && this.payload.listing.youtube.indexOf('youtube.com/embed') !== -1;
           this._hasDownloads = ("downloads" in listing_) && !_.isEmpty(this.payload.listing.downloads);
         }
         else {
