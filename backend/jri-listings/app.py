@@ -50,6 +50,9 @@ def index():
 			i['fields']['id'] = i['sys']['id']
 			i['fields']['photos'] = [assets[j['sys']['id']] for j in i['fields']['photos']] if "photos" in i['fields'] else []
 			i['fields']['downloads'] = [assets[j['sys']['id']] for j in i['fields']['downloads']] if "downloads" in i['fields'] else []
+			if 'virtualtour' in i['fields']:
+				virtual_tour = {"url": i['fields']['virtualtour'], "fileName": "Virtual Tour"}
+				i['fields']['downloads'].insert(0,virtual_tour)
 			if i['fields']['category'] in category_map:
 				result[category_map[i['fields']['category']]].append(i['fields'])
 				result[category_map[i['fields']['category']]].sort(key=lambda x: status_sorter(x.get('status','N/A')), reverse=True)
