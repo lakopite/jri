@@ -6,3 +6,4 @@ package-lock.json
 local_settings.js
 build-commands.txt
 build-commands-dev.txt
+npm-debug.log
