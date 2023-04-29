@@ -11,8 +11,7 @@ var urlMap = {
   "residential": "residential",
   "commercial": "commercial",
   "farmandland": "farm-and-land",
-  "multiresidential": "multi-residential",
-  "forleaserent": "for-lease-rent"
+  "multiresidential": "multi-residential"
 }
 
 function parseStructuredData(items) {
@@ -55,7 +54,7 @@ fs.readFile(file, 'utf8', function (err,data) {
           throw error;
       }
       var b = JSON.parse(body);
-      var structuredData = '\n\t<script type="application/ld+json">\n\t\t' + parseStructuredData(_.concat(b.residential,b.commercial,b.farmandland,b.multiresidential,b.forleaserent)) + "\n\t</script>"
+      var structuredData = '\n\t<script type="application/ld+json">\n\t\t' + parseStructuredData(_.concat(b.residential,b.commercial,b.farmandland,b.multiresidential)) + "\n\t</script>"
       var result = data.replace('<!-- dynamic structured data -->', structuredData);
 
       fs.writeFile(file, result, 'utf8', function (err) {

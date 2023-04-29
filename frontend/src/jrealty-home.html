@@ -337,16 +337,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </iron-image>
         </div>
       </div>
-      <div id="for-lease-rent-wrapper" class="listings-wrapper">
-        <div class="listing-button-wrapper">
-          <a href="/for-lease-rent" tabindex="-1">
-            <paper-button id="for-lease-rent-button" class="listing-button white full-centered">For Lease/Rent</paper-button>
-          </a>
-        </div>
-        <div class="listings-section" id="for-lease-rent-section">
-          <iron-image sizing="cover" src="https://d36esvdfp2h2m8.cloudfront.net/forleaserentheader.jpg"></iron-image>
-        </div>
-      </div>
     </div>
     <div class="page grey-page" id="firm-overview">
       <div class="overview-wrapper overview-wrapper-top">
@@ -527,9 +517,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       goMultiResidential: function() {
         this._navigatetoListingType('multi-residential');
       },
-      goForLeaseAndRent: function() {
-        this._navigatetoListingType('for-lease-rent');
-      },
       updateScrollDurations: function() {
         var this_ = this;
         _.forIn(this.scenes, function(value,key) {
@@ -603,7 +590,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.scenes["commercial-wrapper"] = this.initScrollHoveredScene("commercial-wrapper");
         this.scenes["multi-residential-wrapper"] = this.initScrollHoveredScene("multi-residential-wrapper");
         this.scenes["residential-wrapper"] = this.initScrollHoveredScene("residential-wrapper");
-        this.scenes["for-lease-rent-wrapper"] = this.initScrollHoveredScene("for-lease-rent-wrapper");
       }
     });
   </script>

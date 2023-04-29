@@ -199,7 +199,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a class="scrollLink" name="commercial" href="/commercial">Commercial</a>
           <a class="scrollLink" name="residential" href="/residential">Residential</a>
           <a class="scrollLink" name="multi-residential" href="/multi-residential">Multi-Residential</a>
-          <a class="scrollLink" name="for-lease-rent" href="/for-lease-rent">For Lease/Rent</a>
           <div class="nav-links">
             <a class="scrollLink smallNavLink" href="//assets.contentful.com/et8ct0zss6ev/3MszNXAAfC8mWWus2qCsO4/0932f0f34cd90401f3e1cd887a0da685/Application_to_Rent_-_Residential.pdf">Residential Rental Application</a>
           </div>
@@ -267,7 +266,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <jrealty-listings listings="[[ listings.commercial ]]" listings-ready="[[listings.ready]]" name="commercial"></jrealty-listings>
           <jrealty-listings listings="[[ listings.residential ]]" listings-ready="[[listings.ready]]" name="residential"></jrealty-listings>
           <jrealty-listings listings="[[ listings.multiresidential ]]" listings-ready="[[listings.ready]]" name="multi-residential"></jrealty-listings>
-          <jrealty-listings listings="[[ listings.forleaserent ]]" listings-ready="[[listings.ready]]" name="for-lease-rent"></jrealty-listings>
           <jrealty-listing desktop="[[desktop]]" listings-ready="[[listings.ready]]" name="listing" payload="[[listingPayload]]"></jrealty-listing>
           <listing-404 name="listing-404"></listing-404>
         </iron-pages>
@@ -287,7 +285,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           	"residential": [],
           	"multiresidential": [],
           	"commercial": [],
-          	"forleaserent": [],
           	"ready": false,
           	"error": false
           }
@@ -342,11 +339,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               "id": "multi-residential",
               "human_readable": "Multi-Residential",
               "header": "url(https://d36esvdfp2h2m8.cloudfront.net/multiresidentialheader.jpg)"
-            },
-            {
-              "id": "for-lease-rent",
-              "human_readable": "For Lease/Rent",
-              "header": "url(https://d36esvdfp2h2m8.cloudfront.net/forleaserentheader.jpg)"
             }
           ],
           readOnly: true
@@ -388,7 +380,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          "residential": [],
          "multiresidential": [],
          "commercial": [],
-         "forleaserent": [],
          "ready": false,
          "error": true
         });
